@@ -14,6 +14,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.List;
+
 import static org.junit.Assert.assertTrue;
 
 
@@ -34,13 +36,15 @@ public class taskDaoTest {
                 .build();
     }
 
+//    todo inserer 1 ou 2 projet
+
     @After
     public void closeDb() throws Exception {
         database.close();
     }
 
     // DATA SET FOR TEST
-    private static long TASK_ID = 1;
+    private static int TASK_ID = 1;
     private static Task TASK_DEMO = new Task(TASK_ID, 1, "Task 1",12);
 
 
@@ -51,8 +55,8 @@ public class taskDaoTest {
         this.database.taskDao().insertTask(TASK_DEMO);
 
         // TEST
-        Task task = LiveDataTestUtil.getValue(this.database.taskDao().getTasks(TASK_ID)); //    <<<<<<<<<<<<
+        List<Task> tasks = LiveDataTestUtil.getValue(this.database.taskDao().getTasks()); //    <<<<<<<<<<<<
 
-        assertTrue(task.getName().equals(TASK_DEMO.getName()) && task.getId() == TASK_ID);
+        assertTrue(tasks.get(TASK_ID).getName().equals(TASK_DEMO.getName()) && tasks.get(TASK_ID).getId() == TASK_ID);
     }
 }

@@ -41,11 +41,13 @@ public class Task {
     // Suppress warning because setName is called in constructor
     @SuppressWarnings("NullableProblems")
     @NonNull
+    @ColumnInfo(name = "name")
     private String name;
 
     /**
      * The timestamp when the task has been created
      */
+    @ColumnInfo(name = "creationTimestamp")
     private long creationTimestamp;
 
     /**

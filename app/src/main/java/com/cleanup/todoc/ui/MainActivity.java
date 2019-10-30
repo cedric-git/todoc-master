@@ -1,8 +1,6 @@
 package com.cleanup.todoc.ui;
 
-
-
-//*********************************  CODE ADAPTE   ********************************
+//*********************************  CODE MODIFIE   ********************************
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -44,13 +42,13 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
 
 
     private TaskViewModel mTaskViewModel; //  <<<<<<<<<<<<<
-//    private TasksAdapter adapter;  //  <<< existe dans le code d'origine
     private static int TASK_ID = 1;//  <<<<<<<<<<<<<
 
     /**
      * List of all projects available in the application
+     * //    private final Project[] allProjects = Project.getAllProjects();
      */
-//    private final Project[] allProjects = Project.getAllProjects();
+
     private List<Project> allProjects;//  <<<<<<<<<<<<<
 
     /**
@@ -111,7 +109,6 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
         setContentView(R.layout.activity_main);
 
         // 1 - Configure RecyclerView & ViewModel
-        this.configureRecyclerView();
         this.configureViewModel();
 
         // 2 - Get current user & items from Database
@@ -143,8 +140,8 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
     // DATA
     // -------------------
 
-// 1 - Get Current User
-        private void getCurrentUser(int projectId){
+// 1 - Get Current Project
+        private void getCurrentProject(int projectId){
 //        this.mTaskViewModel.getProjects(projectId).observe(this, this::updateHeader);
     }
 
@@ -169,34 +166,39 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
         private void updateProjects(List<Project> projects) {
         allProjects = projects;
     }
+
     // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 // 6 - Create task
+    /**
+     * Adds the given task to the list of created tasks.
+     *
+     * @param task the task to be added to the list
+     */
         private void addTask(@NonNull Task task) {
 //        tasks.add(task);
-//        tasks.add(task);
-//        updateTasks();
         mTaskViewModel.createTask(task);    //  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+        adapter.updateTasks(tasks);     //  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     }
 
 // 6 - Delete task
     @Override
         public void onDeleteTask(Task task) {
 //        tasks.remove(task);
-//        updateTasks();
         mTaskViewModel.deleteTask(task);    //  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+        adapter.updateTasks(tasks);      //  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     }
 
 // 7 - Update task
     /**
      * Updates the list of tasks in the UI
      */
-//    private void updateTasks() {
+
     private void updateTasks(List<Task> tasks) {    //  <<<<<<<<<<<<<<<<<<<<<<<<<<
         if (tasks.size() == 0) {
-            adapter.updateTasks(tasks); //  <<<<<<<<<<<<<<<<<<<<<<<<<<
             lblNoTasks.setVisibility(View.VISIBLE);
             listTasks.setVisibility(View.GONE);
+            adapter.updateTasks(tasks); //  <<<<<<<<<<<<<<<<<<<<<<<<<<
         } else {
             lblNoTasks.setVisibility(View.GONE);
             listTasks.setVisibility(View.VISIBLE);
@@ -215,26 +217,14 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
                     break;
 
             }
-            adapter.updateTasks(tasks);
+            adapter.updateTasks(tasks); //  <<<<<<<<<<<<<<<<<<<<<<<<<<
         }
     }
-
-    //  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
     // -------------------
     // UI
     // -------------------
 
-    // 1 - Configure RecyclerView
-    private void configureRecyclerView(){
-//        this.adapter = new TasksAdapter(this);
-        this.listTasks.setAdapter(this.adapter);
-        this.listTasks.setLayoutManager(new LinearLayoutManager(this));
-//        TaskClickSupport.addTo(listTasks, R.layout.item_task)
-//                .setOnItemClickListener((recyclerView1, position, v) -> this.updateTasks(this.adapter.getTask(position)));
-    }
-
-    // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -256,12 +246,10 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
             sortMethod = SortMethod.RECENT_FIRST;
         }
 
-        updateTasks();
-
+        getTasks();
         return super.onOptionsItemSelected(item);
+
     }
-
-
 
     /**
      * Called when the user clicks on the positive button of the Create Task Dialog.
@@ -290,7 +278,8 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
                 long id = (long) (Math.random() * 50000);
 
 
-                Task task = new Task(
+                Task task;
+                task = new Task(
                         id,
                         taskProject.getId(),
                         taskName,
@@ -325,12 +314,6 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
 
         populateDialogSpinner();
     }
-
-    /**
-     * Adds the given task to the list of created tasks.
-     *
-     * @param task the task to be added to the list
-     */
 
 
 
@@ -414,7 +397,7 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
         NONE
     }
 }
-//*********************************  CODE ADAPTE   ********************************
+//*********************************  CODE MODIFIE   ********************************
 
 
 ////*********************************  CODE D'ORIGINE   ********************************
