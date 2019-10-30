@@ -338,6 +338,7 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
             }
         });
 
+
         dialog = alertBuilder.create();
 
         // This instead of listener to positive button in order to avoid automatic dismiss
