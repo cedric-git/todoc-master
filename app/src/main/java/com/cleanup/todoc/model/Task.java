@@ -3,6 +3,7 @@ package com.cleanup.todoc.model;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
+import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,9 +18,17 @@ import java.util.Comparator;
 
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 @Entity(tableName = "tasks",
+//        indices = @Index("project_id"),
         foreignKeys = @ForeignKey(entity = Project.class,
         parentColumns = "id",
         childColumns = "project_id"))
+//@Entity(tableName = "tasks",
+//        indices = @Index("project_id"),
+//        foreignKeys = @ForeignKey(entity = Project.class,
+//        parentColumns = "id",
+//        childColumns = "project_id",
+//        onDelete = ForeignKey.CASCADE))
+
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 public class Task {
@@ -53,13 +62,14 @@ public class Task {
     /**
      * Instantiates a new Task.
      *
-     * @param id                the unique identifier of the task to set
+//     * @param id                the unique identifier of the task to set
      * @param projectId         the unique identifier of the project associated to the task to set
      * @param name              the name of the task to set
      * @param creationTimestamp the timestamp when the task has been created to set
      */
-    public Task(long id, long projectId, @NonNull String name, long creationTimestamp) {
-        this.setId(id);
+//    public Task(long id, long projectId, @NonNull String name, long creationTimestamp) {
+    public Task(long projectId, @NonNull String name, long creationTimestamp) {
+//        this.setId(id);
         this.setProjectId(projectId);
         this.setName(name);
         this.setCreationTimestamp(creationTimestamp);
@@ -79,7 +89,7 @@ public class Task {
      *
      * @param id the unique idenifier of the task to set
      */
-    private void setId(long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -117,7 +127,7 @@ public class Task {
      *
      * @param name the name of the task to set
      */
-    private void setName(@NonNull String name) {
+    public void setName(@NonNull String name) {
         this.name = name;
     }
 
