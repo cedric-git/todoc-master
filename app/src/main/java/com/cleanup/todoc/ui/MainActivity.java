@@ -189,6 +189,8 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
         adapter.updateTasks(tasks);      //  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     }
 
+    // todo : creer methode avec un for qui delete chaque task jusqu a liste vide ( delete all task)
+
 // 7 - Update task
     /**
      * Updates the list of tasks in the UI

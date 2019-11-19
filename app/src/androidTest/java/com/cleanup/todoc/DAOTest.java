@@ -23,6 +23,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
+
 @RunWith(AndroidJUnit4.class)
 public class DAOTest {
 
@@ -34,16 +35,12 @@ public class DAOTest {
     @Before
     public void createDb() {
         Context context = InstrumentationRegistry.getInstrumentation().getContext();
-        database = Room.inMemoryDatabaseBuilder(context, TodocDatabase.class).build();
+
+        database = Room.inMemoryDatabaseBuilder(context, TodocDatabase.class).allowMainThreadQueries().build();
         mTaskDao = database.taskDao();
         mProjectDao = database.projectDao();
     }
 
-    public void initDatabase() {
-        this.database = Room.inMemoryDatabaseBuilder(InstrumentationRegistry.getContext(), TodocDatabase.class)
-            .allowMainThreadQueries()
-            .build();
-}
 
     @Before
     public void addProject() {
@@ -52,24 +49,24 @@ public class DAOTest {
     }
 
     @After
-    public void closeDb() throws IOException {
+    public void closeDb() {
         database.close();
     }
 
     @Test
-    public void getProjects() {
-//
-//        List<Project> projects = mProjectDao.getAllProjects();
-//        assertEquals("Tartampion", projects.get(0).getName());
+    public void getProjects() throws InterruptedException{
+
+        List<Project> projects = LiveDataTestUtil.getValue(mProjectDao.getAllProjects());
+        assertEquals("Tartampion", projects.get(0).getName());
     }
 
     @Test
-    public void insertTask() {
-//
-//        Task task = new Task(1, "Task 1", 1111);
-//        mTaskDao.insertTask(task);
-//        List<Task> tasks = mTaskDao.getAllTasks();
-//        assertEquals(1, tasks.size());
+    public void insertTask() throws InterruptedException {
+
+        Task task = new Task(1, "Task 1", 1111);
+        mTaskDao.insertTask(task);
+        List<Task> tasks = LiveDataTestUtil.getValue (mTaskDao.getAllTasks()) ;
+        assertEquals(1, tasks.size());
     }
 
     @Test
@@ -84,4 +81,7 @@ public class DAOTest {
 //        List<Task> tasks2 = mTaskDao.getAllTasks();
 //        assertEquals(0, tasks2.size());
     }
+
+
+    // todo : creer : get tasks - separer taskDAO et projectDAO
 }
