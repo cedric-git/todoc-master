@@ -3,7 +3,6 @@ package com.cleanup.todoc;
 import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.graphics.Color;
-
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -24,7 +23,7 @@ import static org.junit.Assert.assertEquals;
 
 
 @RunWith(AndroidJUnit4.class)
-public class DAOTest {
+public class TaskDaoTest {
 
     private TaskDao mTaskDao;
     private ProjectDao mProjectDao;
@@ -51,12 +50,6 @@ public class DAOTest {
         database.close();
     }
 
-    @Test
-    public void getProjects() throws InterruptedException{
-
-        List<Project> projects = LiveDataTestUtil.getValue(mProjectDao.getAllProjects());
-        assertEquals("Tartampion", projects.get(0).getName());
-    }
 
     @Test
     public void insertAndGetTask() throws InterruptedException {
@@ -73,6 +66,7 @@ public class DAOTest {
 
         Task task = new Task(1, "Task 2", 2222);
             task.setId(1); //   <<<<<<<<<<<<
+
         mTaskDao.insertTask(task);
         List<Task> tasks1 = LiveDataTestUtil.getValue (mTaskDao.getAllTasks());
         assertEquals("Task 2", tasks1.get(0).getName());
@@ -81,7 +75,4 @@ public class DAOTest {
         List<Task> tasks2 = LiveDataTestUtil.getValue (mTaskDao.getAllTasks());
         assertEquals(0, tasks2.size());
     }
-
-
-    // todo : Separer taskDAO et projectDAO (y inserer qques projets)
 }

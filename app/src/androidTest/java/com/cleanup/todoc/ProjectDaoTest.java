@@ -3,7 +3,6 @@ package com.cleanup.todoc;
 import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.graphics.Color;
-
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -21,10 +20,11 @@ import org.junit.runner.RunWith;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 
 @RunWith(AndroidJUnit4.class)
-public class DAOTest {
+public class ProjectDaoTest {
 
     private TaskDao mTaskDao;
     private ProjectDao mProjectDao;
@@ -40,12 +40,6 @@ public class DAOTest {
         mProjectDao = database.projectDao();
     }
 
-    @Before
-    public void addProject() {
-        Project tartampion = new Project(1, "Tartampion", Color.RED);
-        mProjectDao.insertProjects(tartampion);
-    }
-
     @After
     public void closeDb() {
         database.close();
@@ -53,35 +47,20 @@ public class DAOTest {
 
     @Test
     public void getProjects() throws InterruptedException{
+        //  insert
+        List<Project> projects ;
 
-        List<Project> projects = LiveDataTestUtil.getValue(mProjectDao.getAllProjects());
+        Project tartampion = new Project(1, "Tartampion", Color.RED);
+        mProjectDao.insertProjects(tartampion);
+
+        projects = LiveDataTestUtil.getValue(this.database.projectDao().getProjects());
+        assertEquals(projects.get(0).getName(), projects.get(0).getName());
+        assertEquals(projects.get(0).getId(), projects.get(0).getId());
+        assertEquals(projects.get(0).getColor(), projects.get(0).getColor());
+
+        //  get
         assertEquals("Tartampion", projects.get(0).getName());
     }
-
-    @Test
-    public void insertAndGetTask() throws InterruptedException {
-
-        Task task = new Task(1, "Task 0", 0000);
-        mTaskDao.insertTask(task);
-        List<Task> tasks = LiveDataTestUtil.getValue(mTaskDao.getAllTasks());
-        assertEquals(1, tasks.size());
-        assertEquals("Task 0", tasks.get(0).getName());
-    }
-
-    @Test
-    public void deleteTask() throws InterruptedException {
-
-        Task task = new Task(1, "Task 2", 2222);
-            task.setId(1); //   <<<<<<<<<<<<
-        mTaskDao.insertTask(task);
-        List<Task> tasks1 = LiveDataTestUtil.getValue (mTaskDao.getAllTasks());
-        assertEquals("Task 2", tasks1.get(0).getName());
-
-        mTaskDao.deleteTask(task) ;
-        List<Task> tasks2 = LiveDataTestUtil.getValue (mTaskDao.getAllTasks());
-        assertEquals(0, tasks2.size());
-    }
-
 
     // todo : Separer taskDAO et projectDAO (y inserer qques projets)
 }
