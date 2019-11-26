@@ -48,4 +48,12 @@ dependencies {
     androidTestImplementation "android.arch.core:core-testing:1.1.1"
 
     //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+//    buildTypes {
+//        release {
+//            minifyEnabled true
+//            proguardFiles 'proguard-rules.pro'
+//        }
+//    }
+//
 }

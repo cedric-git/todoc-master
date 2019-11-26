@@ -195,6 +195,7 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
         for(int i = 0; i < count; i++)
         {
 //            mTaskViewModel.deleteTask(task);
+            mTaskViewModel.deleteTask(tasks.get(0));
         }
     }
 

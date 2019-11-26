@@ -58,19 +58,21 @@ public class TaskDaoTest {
         mTaskDao.insertTask(task);
         List<Task> tasks = LiveDataTestUtil.getValue(mTaskDao.getAllTasks());
         assertEquals(1, tasks.size());
-        assertEquals("Task 0", tasks.get(0).getName());
+        assertEquals(task.getName(), tasks.get(0).getName());
     }
 
     @Test
     public void deleteTask() throws InterruptedException {
 
         Task task = new Task(1, "Task 2", 2222);
-            task.setId(1); //   <<<<<<<<<<<<
+//            task.setId(1); //   <<<<<<<<<<<<
 
         mTaskDao.insertTask(task);
         List<Task> tasks1 = LiveDataTestUtil.getValue (mTaskDao.getAllTasks());
         assertEquals("Task 2", tasks1.get(0).getName());
+        assertEquals(1, tasks1.size());
 
+        task=tasks1.get(0); //  <<<<<<<<<
         mTaskDao.deleteTask(task) ;
         List<Task> tasks2 = LiveDataTestUtil.getValue (mTaskDao.getAllTasks());
         assertEquals(0, tasks2.size());
