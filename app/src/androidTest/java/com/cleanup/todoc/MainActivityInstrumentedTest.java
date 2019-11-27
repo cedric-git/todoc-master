@@ -13,6 +13,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.Objects;
+
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.replaceText;
@@ -42,7 +44,7 @@ public class MainActivityInstrumentedTest {
         TextView lblNoTask = activity.findViewById(R.id.lbl_no_task);
         RecyclerView listTasks = activity.findViewById(R.id.list_tasks);
 
-        int count = listTasks.getAdapter().getItemCount();  //  <<<<<<Through Adapter
+        int count = Objects.requireNonNull(listTasks.getAdapter()).getItemCount();  //  <<<<<<Through Adapter
 
         onView(withId(R.id.fab_add_task)).perform(click());
         onView(withId(R.id.txt_task_name)).perform(replaceText("Tâche example"));
@@ -77,15 +79,12 @@ public class MainActivityInstrumentedTest {
         RecyclerView listTasks = activity.findViewById(R.id.list_tasks);
 
     //  delete all tasks
-        int count = listTasks.getAdapter().getItemCount();
+        int count = Objects.requireNonNull(listTasks.getAdapter()).getItemCount();
         for(int i = 0; i < count; i++)
         {
             onView(withRecyclerView(R.id.list_tasks).atPositionOnView(0, R.id.img_delete))
                     .perform(click());
         }
-
-//        listTasks.getAdapter().clearAllTasks();
-//        activity.clearAllTasks();
 
         onView(withId(R.id.fab_add_task)).perform(click());
         onView(withId(R.id.txt_task_name)).perform(replaceText("aaa Tâche example"));

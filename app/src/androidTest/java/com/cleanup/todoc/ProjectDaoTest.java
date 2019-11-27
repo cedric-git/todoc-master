@@ -10,7 +10,6 @@ import com.cleanup.todoc.database.dao.ProjectDao;
 import com.cleanup.todoc.database.dao.TaskDao;
 import com.cleanup.todoc.database.dao.TodocDatabase;
 import com.cleanup.todoc.model.Project;
-//import com.cleanup.todoc.model.Task;
 
 import org.junit.After;
 import org.junit.Before;
@@ -20,8 +19,6 @@ import org.junit.runner.RunWith;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-//import static org.junit.Assert.assertTrue;
-
 
 @RunWith(AndroidJUnit4.class)
 public class ProjectDaoTest {
@@ -55,12 +52,11 @@ public class ProjectDaoTest {
 
         projects = LiveDataTestUtil.getValue(this.database.projectDao().getProjects());
         assertEquals(tartampion.getName(), projects.get(0).getName());
-        assertEquals(projects.get(0).getId(), projects.get(0).getId());// idem
-        assertEquals(projects.get(0).getColor(), projects.get(0).getColor());// idem
+        assertEquals(tartampion.getId(), projects.get(0).getId());
+        assertEquals(tartampion.getColor(), projects.get(0).getColor());
 
         //  get
         assertEquals("Tartampion", projects.get(0).getName());
     }
 
-    // todo : Separer taskDAO et projectDAO (y inserer qques projets)
 }

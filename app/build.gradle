@@ -51,11 +51,4 @@ dependencies {
 
     //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-//    buildTypes {
-//        release {
-//            minifyEnabled true
-//            proguardFiles 'proguard-rules.pro'
-//        }
-//    }
-//
 }
