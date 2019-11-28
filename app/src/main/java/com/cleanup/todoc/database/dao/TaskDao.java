@@ -1,6 +1,6 @@
 package com.cleanup.todoc.database.dao;
 
-//  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+//  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< CRUD style for Room
 
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
@@ -15,22 +15,16 @@ import java.util.List;
 @Dao
 public interface TaskDao {
     @Query("SELECT * FROM tasks")
-    LiveData<List<Task>> getTasks();
+    LiveData<List<Task>> getTasks();//  to get projects from table (repository) / READ
 
     @Query("SELECT * FROM tasks ")
-    LiveData<List<Task>> getAllTasks();
-
-//    @Query("SELECT * FROM tasks ")
-//    LiveData<List<Task>> clearAllTasks();
-
-//    @Query("DELETE FROM tasks WHERE id = :taskId")
-//    void deleteTaskById(int taskId);
+    LiveData<List<Task>> getAllTasks(); //  used in the test
 
     @Insert
-    void insertTask(Task task);
+    void insertTask(Task task); //  for test and repository / CREATE
 
     @Delete
-    void deleteTask(Task task);
+    void deleteTask(Task task);//  for test and repository / DELETE
 }
 
 //  >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

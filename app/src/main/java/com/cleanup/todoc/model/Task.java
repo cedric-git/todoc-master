@@ -16,18 +16,12 @@ import java.util.Comparator;
  * @author Gaëtan HERFRAY
  */
 
-//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<   @Entity & @ForeignKey (For Room)
+
 @Entity(tableName = "tasks",
-//        indices = @Index("project_id"),
         foreignKeys = @ForeignKey(entity = Project.class,
         parentColumns = "id",
         childColumns = "project_id"))
-//@Entity(tableName = "tasks",
-//        indices = @Index("project_id"),
-//        foreignKeys = @ForeignKey(entity = Project.class,
-//        parentColumns = "id",
-//        childColumns = "project_id",
-//        onDelete = ForeignKey.CASCADE))
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
@@ -139,14 +133,15 @@ public class Task {
     private void setCreationTimestamp(long creationTimestamp) {
         this.creationTimestamp = creationTimestamp;
     }
-
+    //  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< GET
     public long getProjectId() {
         return projectId;
-    }   //  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    }
 
     public long getCreationTimestamp() {
         return creationTimestamp;
-    }   //  <<<<<<<<<<<<<<<<<<
+    }
+    //  >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
     /**
      * Comparator to sort task from A to Z

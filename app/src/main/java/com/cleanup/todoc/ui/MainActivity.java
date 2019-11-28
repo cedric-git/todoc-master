@@ -37,11 +37,13 @@ import java.util.List;
  *
  * @author Gaëtan HERFRAY
  */
+
+//  <<<<<<<<<<<<<<<<<<< implement TasksAdapter.Listener
 public class MainActivity extends AppCompatActivity implements TasksAdapter.DeleteTaskListener {
 
 
-    private TaskViewModel mTaskViewModel; //  <<<<<<<<<<<<<
-    private static int TASK_ID = 1;//  <<<<<<<<<<<<<
+    private TaskViewModel mTaskViewModel; //  <<<<<<<<<<<<< declare (Task)ViewModel
+    private static int TASK_ID = 1;//  <<<<<<< to delete
 
     /**
      * List of all projects available in the application
@@ -57,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
     private final ArrayList<Task> tasks = new ArrayList<>();
 
     /**
-     * The adapter which handles the list of tasks
+     * The adapter which handles the list of tasks //  <<<<<<<<<<<<< Declare adapter
      */
     private final TasksAdapter adapter = new TasksAdapter(tasks, this);
 
@@ -107,7 +109,7 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
 
         setContentView(R.layout.activity_main);
 
-        // 1 - Configure RecyclerView & ViewModel
+        // 1 - Configure ViewModel
         this.configureViewModel();
 
         listTasks = findViewById(R.id.list_tasks);
@@ -130,22 +132,22 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
     // -------------------
 
 // 1 - Get Current Project
-        private void getCurrentProject(int projectId){
+        private void getCurrentProject(int projectId){  //  to delete
     }
 
-// 2 - Configuring ViewModel
+// 2 - Configuring ViewModel // <<<<<<<<< instanciate (Task)ViewModel via Factory
         private void configureViewModel() {
         ViewModelFactory viewModelFactory = Injection.provideViewModelFactory(this);
         mTaskViewModel = ViewModelProviders.of(this, viewModelFactory).get(TaskViewModel.class);
         mTaskViewModel.init();
         }
 
-// 3 - Get all projects
+// 3 - Get all projects //  <<<<<<<<< + observe any change in database
         private void getProjects() {
         mTaskViewModel.getProjects().observe(this, this::updateProjects);
     }
 
-// 4 - Get all tasks
+// 4 - Get all tasks <<<<<<<<< + observe any change in database
         private void getTasks() {
         mTaskViewModel.getTasks().observe(this, this::updateTasks);
     }

@@ -12,28 +12,19 @@ import android.support.annotation.NonNull;
 import com.cleanup.todoc.model.Project;
 import com.cleanup.todoc.model.Task;
 
-//  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+//  <<<<<<<<<<<<<<<<<<<<<<<<< Configure database and link interfaces/classes together
 
+//  Create database and declare the tables
 @Database(entities = {Project.class, Task.class}, version = 1, exportSchema = false)
 public abstract class TodocDatabase extends RoomDatabase {
 
-//  ***************************************************************
-    //Singleton
+    //Singleton (to restrict instanciation to a single object)
     private static volatile TodocDatabase INSTANCE;
 
-//    //DAO
-//    public abstract ProjectDao mProjectDao();
-//    public abstract TaskDao mTaskDao();
-
-
-
     //Field
-    private static Project[] projects = Project.getAllProjects();
-//  ********************************************************************
+    private static Project[] projects = Project.getAllProjects();   //  to delete
 
     //Instance
-//    public static volatile TodocDatabase INSTANCE;
-
     public static TodocDatabase getInstance(Context context) {
         if (INSTANCE == null) {
             synchronized (TodocDatabase.class) {
@@ -56,10 +47,9 @@ public abstract class TodocDatabase extends RoomDatabase {
             public void onCreate(@NonNull SupportSQLiteDatabase db) {
                 super.onCreate(db);
 
-                Project[] projects = Project.getAllProjects();    //  <<<<<<<<<<<<<
+                Project[] projects = Project.getAllProjects();
                 for (Project project : projects) {
                     ContentValues contentValues = new ContentValues();
-//                    contentValues.put("id", project.getId());
                     contentValues.put("name", project.getName());
                     contentValues.put("color", project.getColor());
 

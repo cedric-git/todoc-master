@@ -11,26 +11,26 @@ import android.support.annotation.Nullable;
  *
  * @author Gaëtan HERFRAY
  */
-@Entity(tableName = "projects") //  <<<<<<<<<<<<<<<<<<<<<<<<<<<
+@Entity(tableName = "projects") //  <<<<<@Entity & @PrimaryKey(For Room)
 public class Project {
     /**
      * The unique identifier of the project
      */
 
-    @PrimaryKey //  <<<<<<<<<<<<<<<<<<<<<<<<<<<<
-    private long id;    //  <<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    @PrimaryKey //  <<<<<<<<<<<<<<<<<<<<<<<<<<<< @PrimaryKey
+    private long id;    //  <<<<<<<<<<<<<<<<<<<<<<<<<<<< no final
 
     /**
      * The name of the project
      */
     @NonNull
-    private String name;    //  <<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    private String name;    //  <<<<<<<<<<<<<<<<<<<<<<<<<<<< no final
 
     /**
      * The hex (ARGB) code of the color associated to the project
      */
     @ColorInt
-    private int color;  //  <<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    private int color;  //  <<<<<<<<<<<<<<<<<<<<<<<<<<<< no final
 
     /**
      * Instantiates a new Project.
@@ -104,7 +104,7 @@ public class Project {
         return color;
     }
 
-    //  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    //  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<    CONSTRUCTOR
 
     public void setId(long id) {
         this.id = id;
@@ -118,8 +118,6 @@ public class Project {
 
 
     //  >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-
 
     @Override
     @NonNull
