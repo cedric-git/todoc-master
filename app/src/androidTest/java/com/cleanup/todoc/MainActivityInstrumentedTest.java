@@ -40,6 +40,7 @@ public class MainActivityInstrumentedTest {
 
     @Test
     public void addAndRemoveTask() {
+        //  Add
         MainActivity activity = rule.getActivity();
         TextView lblNoTask = activity.findViewById(R.id.lbl_no_task);
         RecyclerView listTasks = activity.findViewById(R.id.list_tasks);
@@ -57,6 +58,7 @@ public class MainActivityInstrumentedTest {
         // Check that it contains one element only
         assertThat(listTasks.getAdapter().getItemCount(), equalTo(count+1));  //  <<<<<<< +1
 
+        //  remove
         onView(withRecyclerView(R.id.list_tasks).atPositionOnView(0, R.id.img_delete))
                 .perform(click());//  <<<<<<< use recyclerview
 
@@ -68,7 +70,7 @@ public class MainActivityInstrumentedTest {
             // Check that recyclerView size
             assertThat(listTasks.getVisibility(), equalTo(View.GONE));
         }else{
-            assertThat(listTasks.getAdapter().getItemCount(), equalTo(count));
+            assertThat(listTasks.getAdapter().getItemCount(), equalTo(count));  // back to original count
         }
     }
 
@@ -78,13 +80,16 @@ public class MainActivityInstrumentedTest {
         TextView lblNoTask = activity.findViewById(R.id.lbl_no_task);
         RecyclerView listTasks = activity.findViewById(R.id.list_tasks);
 
-    //  delete all tasks
+        //  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< //  delete all tasks
+
         int count = Objects.requireNonNull(listTasks.getAdapter()).getItemCount();
         for(int i = 0; i < count; i++)
         {
             onView(withRecyclerView(R.id.list_tasks).atPositionOnView(0, R.id.img_delete))
                     .perform(click());
         }
+
+        //  >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
         onView(withId(R.id.fab_add_task)).perform(click());
         onView(withId(R.id.txt_task_name)).perform(replaceText("aaa Tâche example"));

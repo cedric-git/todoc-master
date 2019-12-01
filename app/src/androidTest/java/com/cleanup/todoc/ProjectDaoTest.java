@@ -29,10 +29,10 @@ public class ProjectDaoTest {
 
 
     @Before
-    public void createDb() {
+    public void createDb() {    //  create Database
         Context context = InstrumentationRegistry.getInstrumentation().getContext();
 
-        database = Room.inMemoryDatabaseBuilder(context, TodocDatabase.class).allowMainThreadQueries().build();
+        database = Room.inMemoryDatabaseBuilder(context, TodocDatabase.class).allowMainThreadQueries().build(); //  use Room
         mTaskDao = database.taskDao();
         mProjectDao = database.projectDao();
     }
@@ -47,16 +47,17 @@ public class ProjectDaoTest {
         //  insert
         List<Project> projects ;
 
-        Project tartampion = new Project(1, "Tartampion", Color.RED);
+        Project tartampion = new Project(1, "Tartampion", Color.RED);   //  define 1 project (tartampion) 'en dur'
         mProjectDao.insertProjects(tartampion);
 
-        projects = LiveDataTestUtil.getValue(this.database.projectDao().getProjects());
-        assertEquals(tartampion.getName(), projects.get(0).getName());
-        assertEquals(tartampion.getId(), projects.get(0).getId());
-        assertEquals(tartampion.getColor(), projects.get(0).getColor());
+        projects = LiveDataTestUtil.getValue(this.database.projectDao().getProjects()); // use projectDao and Google code
+
+        assertEquals(tartampion.getName(), projects.get(0).getName());  //   check 'insert'
+        assertEquals(tartampion.getId(), projects.get(0).getId());      //      ''
+        assertEquals(tartampion.getColor(), projects.get(0).getColor());//      ''
 
         //  get
-        assertEquals("Tartampion", projects.get(0).getName());
+        assertEquals("Tartampion", projects.get(0).getName());//    check 'get' (by name)
     }
 
 }

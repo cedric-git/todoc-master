@@ -29,18 +29,17 @@ public class TaskDaoTest {
     private ProjectDao mProjectDao;
     private TodocDatabase database;
 
-
     @Before
     public void createDb() {
         Context context = InstrumentationRegistry.getInstrumentation().getContext();
 
-        database = Room.inMemoryDatabaseBuilder(context, TodocDatabase.class).allowMainThreadQueries().build();
+        database = Room.inMemoryDatabaseBuilder(context, TodocDatabase.class).allowMainThreadQueries().build(); //  use Room
         mTaskDao = database.taskDao();
         mProjectDao = database.projectDao();
     }
 
     @Before
-    public void addProject() {
+    public void addProject() {                                                  //  insert 1 project
         Project tartampion = new Project(1, "Tartampion", Color.RED);
         mProjectDao.insertProjects(tartampion);
     }
@@ -52,29 +51,27 @@ public class TaskDaoTest {
 
 
     @Test
-    public void insertAndGetTask() throws InterruptedException {
+    public void insertAndGetTask() throws InterruptedException {    //  'GET TASK'
 
-        Task task = new Task(1, "Task 0", 0000);
-        mTaskDao.insertTask(task);
-        List<Task> tasks = LiveDataTestUtil.getValue(mTaskDao.getAllTasks());
-        assertEquals(1, tasks.size());
-        assertEquals(task.getName(), tasks.get(0).getName());
+        Task task = new Task(1, "Task 0", 0000);  //  create task
+        mTaskDao.insertTask(task);                                               //  insert task
+        List<Task> tasks = LiveDataTestUtil.getValue(mTaskDao.getAllTasks());    //  list all tasks
+        assertEquals(1, tasks.size());                                  //  check size is 1
+        assertEquals(task.getName(), tasks.get(0).getName());                    //   check name is same
     }
 
     @Test
-    public void deleteTask() throws InterruptedException {
+    public void deleteTask() throws InterruptedException {  //  'DELETE TASK'
 
-        Task task = new Task(1, "Task 2", 2222);
-//            task.setId(1); //   <<<<<<<<<<<<
+        Task task = new Task(1, "Task 2", 2222);    //  create task
+        mTaskDao.insertTask(task);                                                 //  insert task
+        List<Task> tasks1 = LiveDataTestUtil.getValue (mTaskDao.getAllTasks());   //  list all tasks
+        assertEquals("Task 2", tasks1.get(0).getName());                //   check name is same
+        assertEquals(1, tasks1.size());                                 //  check size is 1
 
-        mTaskDao.insertTask(task);
-        List<Task> tasks1 = LiveDataTestUtil.getValue (mTaskDao.getAllTasks());
-        assertEquals("Task 2", tasks1.get(0).getName());
-        assertEquals(1, tasks1.size());
-
-        task=tasks1.get(0); //  <<<<<<<<<
-        mTaskDao.deleteTask(task) ;
-        List<Task> tasks2 = LiveDataTestUtil.getValue (mTaskDao.getAllTasks());
-        assertEquals(0, tasks2.size());
+        task=tasks1.get(0);                                                     //  set task
+        mTaskDao.deleteTask(task) ;                                             //  delete task
+        List<Task> tasks2 = LiveDataTestUtil.getValue (mTaskDao.getAllTasks());//  list all tasks
+        assertEquals(0, tasks2.size());                               //  check list size back to 0
     }
 }

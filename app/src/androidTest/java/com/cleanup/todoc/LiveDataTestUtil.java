@@ -7,7 +7,7 @@ import android.support.annotation.Nullable;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-public class LiveDataTestUtil {
+public class LiveDataTestUtil { // code provided by google
 
     /**
      * Get the value from a LiveData object. We're waiting for LiveData to emit, for 2 seconds.
