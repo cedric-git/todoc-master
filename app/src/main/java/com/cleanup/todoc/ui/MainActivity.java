@@ -9,6 +9,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -66,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
     /**
      * The sort method to be used to display tasks
      */
-    @NonNull
+//    @NonNull
     private SortMethod sortMethod = SortMethod.NONE;
 
     /**
@@ -106,7 +107,14 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<++++++++++++++++++++++++++++++++++++++++++
 
+        if (savedInstanceState != null) {
+            sortMethod = SortMethod.values()[
+                    savedInstanceState.getInt("sortMethod", 4)];
+        }
+
+//  +++++++++++++++++++++++++++++++++++++>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
         setContentView(R.layout.activity_main);
 
         // 1 - Configure ViewModel
@@ -119,13 +127,20 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
         listTasks.setAdapter(adapter);
 
         findViewById(R.id.fab_add_task).setOnClickListener(view -> showAddTaskDialog());
-
-//  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+//  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
         configureViewModel();
         getProjects();
         getTasks();
     }
+//  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<++++++++++++++++++++ save sort method
+    @Override
+    public void onSaveInstanceState (Bundle savedInstanceState) {
+
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putInt("sortMethod",sortMethod.ordinal());
+    }
+//  +++++++++++++++++++++++++++++++++++++>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
     // -------------------
     // DATA
@@ -167,16 +182,16 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
      */
         private void addTask(@NonNull Task task) {
 //        tasks.add(task);
-        mTaskViewModel.createTask(task);    //  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-        adapter.updateTasks(tasks);     //  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+        mTaskViewModel.createTask(task);    //  <<<<<<<<<< refer to  mTaskViewModel
+        adapter.updateTasks(tasks);     //  <<<<<<<<<<<<<<refer to  adapter
     }
 
 // 6 - Delete task
     @Override
         public void onDeleteTask(Task task) {
 //        tasks.remove(task);
-        mTaskViewModel.deleteTask(task);    //  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-        adapter.updateTasks(tasks);      //  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+        mTaskViewModel.deleteTask(task);    //  <<<<<<<<<< refer to  mTaskViewModel
+        adapter.updateTasks(tasks);      //  <<<<<<<<<<<<<<refer to  adapter
     }
 
 // 7 - Update task
@@ -184,11 +199,11 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
      * Updates the list of tasks in the UI
      */
 
-    private void updateTasks(List<Task> tasks) {    //  <<<<<<<<<<<<<<<<<<<<<<<<<<
+    private void updateTasks(List<Task> tasks) {
         if (tasks.size() == 0) {
             lblNoTasks.setVisibility(View.VISIBLE);
             listTasks.setVisibility(View.GONE);
-            adapter.updateTasks(tasks); //  <<<<<<<<<<<<<<<<<<<<<<<<<<
+            adapter.updateTasks(tasks); //  <<<<<<<<<<<<<<refer to  adapter
         } else {
             lblNoTasks.setVisibility(View.GONE);
             listTasks.setVisibility(View.VISIBLE);
@@ -207,7 +222,7 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
                     break;
 
             }
-            adapter.updateTasks(tasks); //  <<<<<<<<<<<<<<<<<<<<<<<<<<
+            adapter.updateTasks(tasks); //  <<<<<<<<<<<<<<refer to  adapter
         }
     }
 
@@ -221,6 +236,8 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
         getMenuInflater().inflate(R.menu.actions, menu);
         return true;
     }
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -270,7 +287,6 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
 
                 Task task;
                 task = new Task(
-//                        id,   //  <<<<<<<<<<<<<<<<<<<
                         taskProject.getId(),
                         taskName,
                         new Date().getTime()
@@ -352,7 +368,7 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
     /**
      * List of all possible sort methods for task
      */
-    private enum SortMethod {
+    public enum SortMethod {
         /**
          * Sort alphabetical by name
          */

@@ -20,15 +20,17 @@ public class TaskViewModel extends ViewModel {
     @Nullable
     private LiveData<List<Project>> mProjects;
 
+
     public TaskViewModel(ProjectDataRepository projectDataSource, TaskDataRepository taskDataSource, Executor executor) {
         mProjectDataSource = projectDataSource;
         mTaskDataSource = taskDataSource;
-        mExecutor = executor;
+        mExecutor = executor;   //  used to execute by asynchrone way
     }
 
     public void init() {
         mProjects = mProjectDataSource.getProjects();
     }
+
 
     @Nullable
 
@@ -53,4 +55,6 @@ public class TaskViewModel extends ViewModel {
     public void deleteTask(Task task) {
         mExecutor.execute(() -> mTaskDataSource.deleteTask(task));
     }
+
+
 }

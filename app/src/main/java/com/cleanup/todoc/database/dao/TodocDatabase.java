@@ -29,7 +29,7 @@ public abstract class TodocDatabase extends RoomDatabase {
         if (INSTANCE == null) {
             synchronized (TodocDatabase.class) {
                 if (INSTANCE == null) {
-                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
+                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(), // Build Instance
                             TodocDatabase.class,
                             "TodocDatabase.db")
                             .addCallback(prepopulateDatabase())
@@ -49,7 +49,7 @@ public abstract class TodocDatabase extends RoomDatabase {
 
                 Project[] projects = Project.getAllProjects();
                 for (Project project : projects) {
-                    ContentValues contentValues = new ContentValues();
+                    ContentValues contentValues = new ContentValues();  //  Populate
                     contentValues.put("name", project.getName());
                     contentValues.put("color", project.getColor());
 
